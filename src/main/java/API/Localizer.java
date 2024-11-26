@@ -25,7 +25,7 @@ public class Localizer {
                     newBuilder().uri(URI.create(
                             "https://api.open-meteo.com/v1/forecast?latitude="+ this.latitude +
                                     "&longitude="+ this.longitude +
-                                    "&daily=temperature_2m_max,temperature_2m_min&timezone=America/Sao_Paulo"
+                                    "&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,wind_speed_10m,wind_direction_10m,soil_temperature_6cm,soil_moisture_1_to_3cm,uv_index"
                     )).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -35,6 +35,7 @@ public class Localizer {
 
             if (response.statusCode() == 200){
                 data = mapper.readValue(response.body(), Data.class);
+                System.out.println(response.body());
                 return data;
             } else {
                 System.out.println(response.statusCode());

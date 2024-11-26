@@ -8,7 +8,7 @@ import java.util.ArrayList;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Data {
 
-    @JsonProperty("daily")
+    @JsonProperty("hourly")
     private DailyData daily;
 
     @JsonIgnoreProperties(ignoreUnknown = true)
