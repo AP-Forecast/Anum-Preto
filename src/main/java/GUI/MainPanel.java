@@ -1,13 +1,15 @@
 package GUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
+import java.io.File;
 
 public class MainPanel extends JFrame {
     private JPanel contentPanel;
+    private File icons = new File("src/main/java/resource/icons");
 
     public MainPanel() {
         // Set up the main frame
@@ -23,25 +25,42 @@ public class MainPanel extends JFrame {
         // Create buttons with icons
         String[] buttonLabels = {"Rain", "Wind", "UV Index", "Forecast", "Config"};
         String[] iconPaths = {
-                "resource/icons/rain.png",
-                "resource/icons/wind.png",
-                "resource/icons/uvIndex.png",
-                "resource/icons/forecast.png",
-                "resource/icons/config.png"
+                "rain.png",
+                "wind.png",
+                "uvIndex.png",
+                "forecast.png",
+                "config.png"
         };
 
+
         for (int i = 0; i < buttonLabels.length; i++) {
-            //ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource(iconPaths[i]));
-            JButton button = new JButton(buttonLabels[i]);
+            try {
+
+                Image image = ImageIO.read(new File(icons, iconPaths[i]));
+                Image resized = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                JButton button = new JButton(buttonLabels[i],new ImageIcon(resized));
+                button.addActionListener(new ButtonClickListener());
+                sidebarPanel.add(button);
+
+            } catch (Exception e){
+
+                System.out.println(e.getMessage());
+
+            }
+
+            //button.setBackground(Color.GREEN);
+
+
             //button.setIcon(icon);
-            button.addActionListener(new ButtonClickListener());
-            sidebarPanel.add(button);
+
+
+            //System.out.println(button.getIcon());
         }
 
         // Create content panel
         contentPanel = new JPanel();
         contentPanel.setBackground(Color.WHITE);
-        contentPanel.add(new JLabel("Welcome! Please select an option from the sidebar."));
+        contentPanel.add(new JLabel("Bem vindo ao AP Forecast! Selecione uma opção do menu à esquerda."));
 
         // Add panels to the frame
         add(sidebarPanel, BorderLayout.WEST);
@@ -60,6 +79,7 @@ public class MainPanel extends JFrame {
     private void updateContent(String buttonText) {
         contentPanel.removeAll(); // Clear existing content
         JLabel label;
+        JTextArea textArea;
         switch (buttonText){
             case "Rain":
                 label = new JLabel("Rain chance: " + buttonText);
@@ -68,12 +88,11 @@ public class MainPanel extends JFrame {
             break;
 
             case "Wind":
-                label = new JLabel("Wind direction: " + buttonText);
-                JLabel label2 = new JLabel("Wind speed: " + buttonText);
-                label2.setFont(new Font("Arial", Font.PLAIN, 24));
-                label.setFont(new Font("Arial", Font.PLAIN, 24));
-                contentPanel.add(label);
-                contentPanel.add(label2);
+                //label = new JLabel("Wind direction: " + buttonText + "<html><br>Wind speed: </html>" + buttonText);
+                //label.setFont(new Font("Arial", Font.PLAIN, 24));
+                textArea = new JTextArea("Wind direction: " + buttonText + "\nWind Speed: " + buttonText);
+                textArea.setFont(new Font("Arial", Font.PLAIN, 24));
+                contentPanel.add(textArea);
             break;
 
             case "UV Index":
