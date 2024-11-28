@@ -25,13 +25,11 @@ public class Localizer {
                     newBuilder().uri(URI.create(
                             "https://api.open-meteo.com/v1/forecast?latitude="+ this.latitude +
                                     "&longitude="+ this.longitude +
-                                    "&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,wind_speed_10m,wind_direction_10m,soil_temperature_6cm,soil_moisture_1_to_3cm,uv_index"
+                                    "&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_sum,rain_sum,wind_speed_10m_max,wind_direction_10m_dominant&timezone=America%2FSao_Paulo"
                     )).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             ObjectMapper mapper = new ObjectMapper();
-
-
 
             if (response.statusCode() == 200){
                 data = mapper.readValue(response.body(), Data.class);
@@ -46,5 +44,9 @@ public class Localizer {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public String getData() {
+        return data.toString();
     }
 }
