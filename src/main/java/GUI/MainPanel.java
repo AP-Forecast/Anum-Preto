@@ -48,8 +48,11 @@ public class MainPanel extends JFrame {
 
             } catch (Exception e){
 
-                JOptionPane.showMessageDialog(this, "Error loading icon: " + BUTTON_LABELS[i],
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Error loading icon: " + BUTTON_LABELS[i],
+                        "Error", JOptionPane.ERROR_MESSAGE
+                );
 
             }
         }
