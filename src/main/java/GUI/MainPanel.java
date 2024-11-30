@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import API.Localizer.*;
+import GUI.Pages.*;
+
 public class MainPanel extends JFrame {
     private JPanel contentPanel;
     private File icons = new File("src/main/java/resource/icons");
@@ -47,18 +50,10 @@ public class MainPanel extends JFrame {
                 System.out.println(e.getMessage());
 
             }
-
-            //button.setBackground(Color.GREEN);
-
-
-            //button.setIcon(icon);
-
-
-            //System.out.println(button.getIcon());
         }
 
         // Create content panel
-        contentPanel = new JPanel();
+        contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setBackground(Color.WHITE);
         contentPanel.add(new JLabel("Bem vindo ao AP Forecast! Selecione uma opção do menu à esquerda."));
 
@@ -78,8 +73,10 @@ public class MainPanel extends JFrame {
 
     private void updateContent(String buttonText) {
         contentPanel.removeAll(); // Clear existing content
+        GridBagConstraints mainController = new GridBagConstraints();
         JLabel label;
         JTextArea textArea;
+
         switch (buttonText){
             case "Rain":
                 label = new JLabel("Rain chance: " + buttonText);
@@ -88,8 +85,6 @@ public class MainPanel extends JFrame {
             break;
 
             case "Wind":
-                //label = new JLabel("Wind direction: " + buttonText + "<html><br>Wind speed: </html>" + buttonText);
-                //label.setFont(new Font("Arial", Font.PLAIN, 24));
                 textArea = new JTextArea("Wind direction: " + buttonText + "\nWind Speed: " + buttonText);
                 textArea.setFont(new Font("Arial", Font.PLAIN, 24));
                 contentPanel.add(textArea);
@@ -108,14 +103,18 @@ public class MainPanel extends JFrame {
             break;
 
             case "Config":
-                label = new JLabel("Change your location: " + buttonText);
-                label.setFont(new Font("Arial", Font.PLAIN, 24));
-                contentPanel.add(label);
+                Config configPanel = new Config(icons);
+                configPanel.getSend().addActionListener(new ButtonClickListener());
+                mainController.anchor = GridBagConstraints.CENTER;
+                contentPanel.add(configPanel.getConfigPanel());
+
+
             break;
         }
 
-        contentPanel.revalidate(); // Refresh the panel
-        contentPanel.repaint(); // Repaint to show updates
+        // Resetting the panel
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
 
     public static void main(String[] args) {

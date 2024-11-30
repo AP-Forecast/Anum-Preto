@@ -46,6 +46,12 @@ public class Localizer {
         }
     }
 
+    public void setLocation(String latitude, String longitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+
     public String getData() {
         return data.toString();
     }
