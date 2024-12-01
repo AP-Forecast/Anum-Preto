@@ -7,24 +7,24 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class Localizer {
-    private String latitude;
-    private String longitude;
+public abstract class Localizer {
+    static String latitude;
+    static String longitude;
 
     Data data = new Data();
 
-    public Localizer(String latitude, String longitude) {
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }
+    //public Localizer(String latitude, String longitude) {
+    //    this.longitude = longitude;
+    //    this.latitude = latitude;
+    //}
 
     public Data getLocation() throws Exception{
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.
                     newBuilder().uri(URI.create(
-                            "https://api.open-meteo.com/v1/forecast?latitude="+ this.latitude +
-                                    "&longitude="+ this.longitude +
+                            "https://api.open-meteo.com/v1/forecast?latitude="+ latitude +
+                                    "&longitude="+ longitude +
                                     "&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_sum,rain_sum,wind_speed_10m_max,wind_direction_10m_dominant&timezone=America%2FSao_Paulo"
                     )).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -46,11 +46,10 @@ public class Localizer {
         }
     }
 
-    public void setLocation(String latitude, String longitude){
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public static void setLocation(String lat, String longi){
+        latitude = lat;
+        longitude = longi;
     }
-
 
     public String getData() {
         return data.toString();

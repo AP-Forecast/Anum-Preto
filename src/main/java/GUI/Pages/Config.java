@@ -3,7 +3,11 @@ package GUI.Pages;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+
+import API.Localizer;
 
 public class Config extends JFrame {
 
@@ -74,7 +78,21 @@ public class Config extends JFrame {
         try {
             Image image = ImageIO.read(new File(icons, "send-button.png"));
             Image resized = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-            send = new JButton("Enviar", new ImageIcon(resized));
+            send = new JButton("Send", new ImageIcon(resized));
+            send.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String lat = latitudeData.getText();
+                    String longi = longitudeData.getText();
+
+                    try{
+                        Localizer.setLocation(lat, longi);
+                        JOptionPane.showMessageDialog(configPanel, "Dados alterados com sucesso!");
+                    } catch (Exception exception){
+                        JOptionPane.showMessageDialog(configPanel, "Não consegui alterar seus dados.");
+                    }
+                }
+            });
             configPanel.add(send, positioner);
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -83,9 +101,5 @@ public class Config extends JFrame {
 
     public JPanel getConfigPanel() {
         return configPanel;
-    }
-
-    public JButton getSend() {
-        return send;
     }
 }
