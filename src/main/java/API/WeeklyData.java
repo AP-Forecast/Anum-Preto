@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Data {
+public class WeeklyData {
 
     @JsonProperty("daily")
-    private DailyData daily;
+    private Weekly daily;
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class DailyData {
+    public static class Weekly {
         @JsonProperty("temperature_2m_max")
         private ArrayList<Double> temperatureMax;
 
@@ -72,14 +72,4 @@ public class Data {
         }
     }
 
-    public DailyData getDaily() {
-        return daily;
-    }
-
-    @Override
-    public String toString() {
-        return "Data{" +
-                "daily=" + daily +
-                '}';
-    }
 }
