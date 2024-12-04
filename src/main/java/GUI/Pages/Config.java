@@ -3,9 +3,15 @@ package GUI.Pages;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
-public class Config extends JFrame {
+import API.Localizer;
+import API.database.utils.CRUD_Operator;
+import API.database.utils.HibernateUtil;
+
+public class Config extends JPanel {
 
     JPanel configPanel;
     JButton send;
@@ -74,18 +80,36 @@ public class Config extends JFrame {
         try {
             Image image = ImageIO.read(new File(icons, "send-button.png"));
             Image resized = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-            send = new JButton("Enviar", new ImageIcon(resized));
+            send = new JButton("Send", new ImageIcon(resized));
+            send.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String lat = latitudeData.getText();
+                    String longi = longitudeData.getText();
+
+                    try{
+                        CRUD_Operator.truncateDb();
+                        Localizer.setLocation(lat, longi);
+                        Localizer.getWeeklyData();
+                        Localizer.getHourlyData();
+
+                        CRUD_Operator doc = new CRUD_Operator();
+                        doc.createData(Localizer.getData(), Localizer.getHourly_data());
+
+                        JOptionPane.showMessageDialog(configPanel, "Dados alterados com sucesso!");
+                    } catch (Exception exception){
+                        JOptionPane.showMessageDialog(configPanel, "Não consegui alterar seus dados.");
+                    }
+                }
+            });
             configPanel.add(send, positioner);
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
+
+        setLayout(new BorderLayout());
+        setBackground(Color.white);
+        add(configPanel, BorderLayout.CENTER);
     }
 
-    public JPanel getConfigPanel() {
-        return configPanel;
-    }
-
-    public JButton getSend() {
-        return send;
-    }
 }

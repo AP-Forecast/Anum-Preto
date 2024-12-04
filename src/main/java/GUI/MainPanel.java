@@ -12,6 +12,7 @@ import GUI.Pages.*;
 public class MainPanel extends JFrame {
     private JPanel contentPanel;
     private File icons = new File("src/main/java/resource/icons");
+    private File images = new File("src/main/java/resource/images");
 
     private static final String[] BUTTON_LABELS = {"Rain", "Wind", "UV Index", "Forecast", "Config"};
     private static final String[] ICON_PATHS = {
@@ -48,8 +49,11 @@ public class MainPanel extends JFrame {
 
             } catch (Exception e){
 
-                JOptionPane.showMessageDialog(this, "Error loading icon: " + BUTTON_LABELS[i],
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Error loading icon: " + BUTTON_LABELS[i],
+                        "Error", JOptionPane.ERROR_MESSAGE
+                );
 
             }
         }
@@ -82,19 +86,28 @@ public class MainPanel extends JFrame {
 
         switch (buttonText){
             case "Rain":
-
+                Rain rainPanel = new Rain(images);
+                mainController.fill = GridBagConstraints.BOTH; // Allow resizing in both directions
+                mainController.weightx = 1.0; // Allow growth in width
+                mainController.weighty = 1.0;
+                contentPanel.add(rainPanel, mainController);
             break;
 
             case "Wind":
-                textArea = new JTextArea("Wind direction: " + buttonText + "\nWind Speed: " + buttonText);
-                textArea.setFont(new Font("Arial", Font.PLAIN, 24));
-                contentPanel.add(textArea);
+                Wind windPanel = new Wind(icons);
+                mainController.fill = GridBagConstraints.BOTH; // Allow resizing in both directions
+                mainController.weightx = 1.0; // Allow growth in width
+                mainController.weighty = 1.0; // Allow growth in height
+                contentPanel.add(windPanel, mainController);
+
             break;
 
             case "UV Index":
-                label = new JLabel("UV Index" + buttonText);
-                label.setFont(new Font("Arial", Font.PLAIN, 24));
-                contentPanel.add(label);
+                UVIndex uvPanel = new UVIndex(icons);
+                mainController.fill = GridBagConstraints.BOTH; // Allow resizing in both directions
+                mainController.weightx = 1.0; // Allow growth in width
+                mainController.weighty = 1.0; // Allow growth in height
+                contentPanel.add(uvPanel, mainController);
             break;
 
             case "Forecast":
@@ -107,11 +120,8 @@ public class MainPanel extends JFrame {
 
             case "Config":
                 Config configPanel = new Config(icons);
-                configPanel.getSend().addActionListener(new ButtonClickListener());
                 mainController.anchor = GridBagConstraints.CENTER;
-                contentPanel.add(configPanel.getConfigPanel());
-
-
+                contentPanel.add(configPanel, mainController);
             break;
         }
 
