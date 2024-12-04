@@ -7,14 +7,12 @@ import jakarta.persistence.*;
 public class Hourly {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "day_id", foreignKey = @ForeignKey(name = "FK_DAY_HOUR"), nullable = false)
     private Daily dayId;
-
-    @Column(name = "day", nullable = false)
-    private String day;
 
     @Column(name = "hour", nullable = false)
     private String hour;
@@ -51,14 +49,6 @@ public class Hourly {
 
     public void setDayId(Daily dayId) {
         this.dayId = dayId;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
     }
 
     public String getHour() {

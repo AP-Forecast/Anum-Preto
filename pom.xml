@@ -1,26 +1,25 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.example</groupId>
   <artifactId>AP_Forecast</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>Archetype - AP_Forecast</name>
   <url>http://maven.apache.org</url>
+
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- Correctly set encoding -->
   </properties>
+
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.17.2</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version> <!-- Use a specific version -->
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -34,6 +33,11 @@
       <version>6.6.0.Final</version>
     </dependency>
     <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>6.2.0.Final</version> <!-- Ensure this is compatible -->
+    </dependency>
+    <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>42.7.2</version>
@@ -41,27 +45,50 @@
     <dependency>
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
-      <version>3.0.0</version>
+      <version>3.0.0</version> <!-- Ensure compatibility with Hibernate -->
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>2.0.7</version>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.4.12</version>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>7.7.0</version><!-- Specify an exact version -->
+      <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version><!-- Ensure this is up-to-date -->
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+
+          <!-- Set encoding for source files directly in the plugin configuration -->
+          <encoding>${project.build.sourceEncoding}</encoding>
+
+        </configuration>
+      </plugin>
+
+      <!-- Optional: Add other plugins as needed -->
+    </plugins>
+
+    <!-- Resource configuration -->
     <resources>
       <resource>
         <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*.xml</include>
-        </includes>
+
+        <!-- Include other resource types if needed -->
+        <includes><include>**/*.xml</include></includes><!-- Add other includes as necessary -->
+
+        <!-- Set encoding for resources -->
+        <!-- Enable filtering if needed -->
+        <!--<filtering>true</filtering>-->
+
       </resource>
     </resources>
+
   </build>
+
 </project>

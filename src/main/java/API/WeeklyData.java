@@ -47,29 +47,88 @@ public class WeeklyData {
             return temperatureMax;
         }
 
+        public void setTemperatureMax(ArrayList<Double> temperatureMax) {
+            this.temperatureMax = temperatureMax;
+        }
+
         public ArrayList<Double> getTemperatureMin() {
             return temperatureMin;
+        }
+
+        public void setTemperatureMin(ArrayList<Double> temperatureMin) {
+            this.temperatureMin = temperatureMin;
         }
 
         public ArrayList<String> getTime() {
             return time;
         }
 
-        @Override
-        public String toString() {
-            return "DailyData{" +
-                    "temperatureMax=" + temperatureMax +
-                    ", temperatureMin=" + temperatureMin +
-                    ", time=" + time +
-                    ", apparentTempMax=" + apparentTempMax +
-                    ", apparentTempMin=" + apparentTempMin +
-                    ", uvIndex=" + uvIndex +
-                    ", preciptation_sum=" + preciptation_sum +
-                    ", rain_sum=" + rain_sum +
-                    ", maxWindSpeed=" + maxWindSpeed +
-                    ", windDirectionDegrees=" + windDirectionDegrees +
-                    '}';
+        public void setTime(ArrayList<String> time) {
+            this.time = time;
+        }
+
+        public ArrayList<Double> getApparentTempMax() {
+            return apparentTempMax;
+        }
+
+        public void setApparentTempMax(ArrayList<Double> apparentTempMax) {
+            this.apparentTempMax = apparentTempMax;
+        }
+
+        public ArrayList<Double> getApparentTempMin() {
+            return apparentTempMin;
+        }
+
+        public void setApparentTempMin(ArrayList<Double> apparentTempMin) {
+            this.apparentTempMin = apparentTempMin;
+        }
+
+        public ArrayList<Double> getUvIndex() {
+            return uvIndex;
+        }
+
+        public void setUvIndex(ArrayList<Double> uvIndex) {
+            this.uvIndex = uvIndex;
+        }
+
+        public ArrayList<Double> getPreciptation_sum() {
+            return preciptation_sum;
+        }
+
+        public void setPreciptation_sum(ArrayList<Double> preciptation_sum) {
+            this.preciptation_sum = preciptation_sum;
+        }
+
+        public ArrayList<Double> getRain_sum() {
+            return rain_sum;
+        }
+
+        public void setRain_sum(ArrayList<Double> rain_sum) {
+            this.rain_sum = rain_sum;
+        }
+
+        public ArrayList<Double> getMaxWindSpeed() {
+            return maxWindSpeed;
+        }
+
+        public void setMaxWindSpeed(ArrayList<Double> maxWindSpeed) {
+            this.maxWindSpeed = maxWindSpeed;
+        }
+
+        public ArrayList<Double> getWindDirectionDegrees() {
+            return windDirectionDegrees;
+        }
+
+        public void setWindDirectionDegrees(ArrayList<Double> windDirectionDegrees) {
+            this.windDirectionDegrees = windDirectionDegrees;
         }
     }
 
+    public Weekly getDaily() {
+        return daily;
+    }
+
+    public void setDaily(Weekly daily) {
+        this.daily = daily;
+    }
 }

@@ -73,4 +73,11 @@ public abstract class Localizer {
         longitude = longi;
     }
 
+    public static WeeklyData getData() {
+        return data;
+    }
+
+    public static HourlyData getHourly_data() {
+        return hourly_data;
+    }
 }

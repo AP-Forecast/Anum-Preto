@@ -3,23 +3,18 @@ package API.database.utils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class HibernateUtil {
-    private static final SessionFactory sessionFactory;
-    private static final Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
+    private static final SessionFactory sessionFactory = buildSessionFactory();
 
-    static {
+    private static SessionFactory buildSessionFactory() {
         try {
-            Configuration configuration = new Configuration();
-            configuration.configure("hibernate.cfg.xml"); // Ensure this file is in the classpath
-
-            sessionFactory = configuration.buildSessionFactory();
-            logger.info("SessionFactory created successfully.");
-        } catch (Throwable e) {
-            logger.error("Initial SessionFactory creation failed: {}", e.getMessage(), e);
-            throw new ExceptionInInitializerError(e); // Pass the whole exception
+            // Configure Hibernate and build the SessionFactory
+            return new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            // Log the exception using a logging framework (optional)
+            System.err.println("Initial SessionFactory creation failed: " + ex);
+            throw new ExceptionInInitializerError(ex);
         }
     }
 
@@ -27,12 +22,21 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
-    public static Session getSession() {
-        return sessionFactory.openSession();
+    public static Session openSession() {
+        return getSessionFactory().openSession();
     }
 
+    public static void closeSession(Session session) {
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
+    }
+
+    // Optional: Method to close SessionFactory
     public static void shutdown() {
         // Close caches and connection pools
-        getSessionFactory().close();
+        if (sessionFactory != null) {
+            sessionFactory.close();
+        }
     }
 }

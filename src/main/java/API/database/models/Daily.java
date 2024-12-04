@@ -10,6 +10,7 @@ public class Daily {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
     @OneToMany(mappedBy = "dayId", cascade = CascadeType.ALL)
@@ -44,8 +45,6 @@ public class Daily {
 
     @Column(name = "domWindDirection", nullable = false)
     private Double domWindDirection;
-
-
 
     public Long getId() {
         return id;

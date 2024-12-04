@@ -62,9 +62,33 @@ public class HourlyData {
         public ArrayList<Double> getUvIndex() {
             return uvIndex;
         }
+
+        @Override
+        public String toString() {
+            return "Hourly{" +
+                    "time=" + time +
+                    ", temperature=" + temperature +
+                    ", rainChance=" + rainChance +
+                    ", rainAmount=" + rainAmount +
+                    ", windSpeed=" + windSpeed +
+                    ", windDirection=" + windDirection +
+                    ", uvIndex=" + uvIndex +
+                    '}';
+        }
     }
 
     public Hourly getHourly() {
         return hourly;
+    }
+
+    public void setHourly(Hourly hourly) {
+        this.hourly = hourly;
+    }
+
+    @Override
+    public String toString() {
+        return "HourlyData{" +
+                "hourly=" + hourly +
+                '}';
     }
 }
