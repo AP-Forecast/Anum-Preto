@@ -7,7 +7,8 @@ import java.io.File;
 
 public class Rain extends JPanel {
 
-    private int rainChance = 10; //todo: substitute this for data from the API
+    private double rainChance = 10; //todo: substitute this for data from the API
+    private double rainAmount;
     private JLabel label;
 
     public Rain(File images){

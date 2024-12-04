@@ -121,7 +121,7 @@ public class MainPanel extends JFrame {
             case "Config":
                 Config configPanel = new Config(icons);
                 mainController.anchor = GridBagConstraints.CENTER;
-                contentPanel.add(configPanel.getConfigPanel());
+                contentPanel.add(configPanel, mainController);
             break;
         }
 

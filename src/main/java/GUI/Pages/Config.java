@@ -9,7 +9,7 @@ import java.io.File;
 
 import API.Localizer;
 
-public class Config extends JFrame {
+public class Config extends JPanel {
 
     JPanel configPanel;
     JButton send;
@@ -97,9 +97,10 @@ public class Config extends JFrame {
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
+
+        setLayout(new BorderLayout());
+        setBackground(Color.white);
+        add(configPanel, BorderLayout.CENTER);
     }
 
-    public JPanel getConfigPanel() {
-        return configPanel;
-    }
 }
