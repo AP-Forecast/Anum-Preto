@@ -32,7 +32,7 @@ public class Rain extends JPanel {
                 rainChance = hour.getRainChance().doubleValue();
                 rainAmount = hour.getRainAmount();
 
-                if (rainChance >= 0 && rainChance < 50){
+                if (rainChance >= 0 && rainChance < 45){
                     try {
                         Image image = ImageIO.read(new File(images, "blueSky.jpg"));
                         Image resized = image.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
@@ -45,7 +45,7 @@ public class Rain extends JPanel {
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(this, e.getMessage());
                     }
-                } else if (rainChance >= 50 && rainChance < 80) {
+                } else if (rainChance >= 45 && rainChance < 80) {
                     try {
                         Image image = ImageIO.read(new File(images, "cloudySky.jpg"));
                         Image resized = image.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
