@@ -1,5 +1,6 @@
 package GUI.Pages;
 
+import API.database.models.Daily;
 import API.database.models.Hourly;
 import API.database.utils.CRUD_Operator;
 
@@ -14,8 +15,9 @@ import java.time.LocalTime;
 public class Rain extends JPanel {
 
     private CRUD_Operator doc = new CRUD_Operator();
-
-    List<Hourly> hours = doc.readHour(78);
+    List<Daily> days = doc.readAllDays();
+    Long today = days.get(0).getId();
+    List<Hourly> hours = doc.readHour(today);
     private Double rainChance;
     private Double rainAmount;
     private JLabel label;
