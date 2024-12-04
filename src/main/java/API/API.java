@@ -10,9 +10,15 @@ public class API {
         CRUD_Operator doc = new CRUD_Operator();
 
         try {
+
+            for (String texto : Localizer.getWeeklyData()){
+                System.out.println(texto);
+            }
+
             for (String texto : Localizer.getHourlyData()){
                 System.out.println(texto);
             }
+
 
             doc.createData(Localizer.getData(), Localizer.getHourly_data());
 

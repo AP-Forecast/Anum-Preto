@@ -1,11 +1,25 @@
 package GUI.Pages;
 
+import API.database.models.Hourly;
+import API.database.utils.CRUD_Operator;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.time.LocalTime;
+import java.util.List;
 
 public class UVIndex extends JPanel {
+
+    private CRUD_Operator doc = new CRUD_Operator();
+
+    List<Hourly> hours = doc.readHour(78);
+    LocalTime hourNow = LocalTime.now();
+    LocalTime hourAPI;
+
+    private Double uvIndex;
+    private int marker;
     private JPanel uvPanel;
     private static final Color[] COLORS = {
             Color.green,
@@ -16,9 +30,39 @@ public class UVIndex extends JPanel {
     };
     private static final String[] INDEX_UV = {"1-2", "3-5", "6-7", "8-10", "11+"};
 
+    private static final String[] INFORMATION = {
+            "Não precisa usar nada",
+            "Use protetor solar!",
+            "Use protetor solar e roupas compridas",
+            "Use protetor solar, roupas compridas e ande pela sombra",
+            "Se possivel, evite sair de casa"
+    };
+
+
     public UVIndex(File file){
         JPanel innerPanel;
         JLabel index;
+
+        for (Hourly hour : hours){
+            hourAPI = LocalTime.parse(hour.getHour());
+            if (hourNow.isAfter(hourAPI)){
+
+                uvIndex = hour.getUvIndex();
+
+                if (uvIndex >= 0 && uvIndex < 3){
+                    marker = 0;
+                } else if (uvIndex >= 3  && uvIndex < 6) {
+                    marker = 1;
+                } else if (uvIndex >= 6 && uvIndex < 8) {
+                    marker = 2;
+                } else if (uvIndex >= 8 && uvIndex < 11) {
+                    marker = 3;
+                } else if (uvIndex >= 11) {
+                    marker = 4;
+                }
+                break;
+            }
+        }
 
         uvPanel = new JPanel(new GridBagLayout());
         GridBagConstraints outerPositioner = new GridBagConstraints();
@@ -37,7 +81,7 @@ public class UVIndex extends JPanel {
         //Line 2 (information based on the UV index)
         outerPositioner.gridy = 1;
         outerPositioner.fill = GridBagConstraints.BOTH;
-        JLabel info = new JLabel("You should use sunscreen");
+        JLabel info = new JLabel(INFORMATION[marker]);
         info.setFont(new Font("Arial", Font.PLAIN, 24));
         innerPanel = new JPanel();
         innerPanel.setBackground(Color.white);
@@ -59,7 +103,7 @@ public class UVIndex extends JPanel {
 
         for (int j = 0; j < INDEX_UV.length; j++){
             positioner.gridx = j;
-            if (j == 1){ //todo: substitute this for data from the API
+            if (j == marker){
                 sub = new JPanel();
                 sub.setBackground(Color.white);
                 try {

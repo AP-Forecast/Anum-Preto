@@ -29,7 +29,7 @@ public abstract class Localizer {
 
             if (response.statusCode() == 200){
                 data = mapper.readValue(response.body(), WeeklyData.class);
-                return new String[]{"code: " + response.statusCode(), "message: success"};
+                return new String[]{"code: " + response.statusCode(), "message: success", data.toString()};
             } else {
                 System.out.println(response.statusCode());
                 return new String[]{"code: " + response.statusCode(), "message: failed"};
@@ -57,7 +57,7 @@ public abstract class Localizer {
 
             if (response.statusCode() == 200){
                 hourly_data = mapper.readValue(response.body(), HourlyData.class);
-                return new String[]{"code: " + response.statusCode(), "message: success"};
+                return new String[]{"code: " + response.statusCode(), "message: success", hourly_data.toString()};
             } else {
                 return new String[]{"code: " + response.statusCode(), "message: failed"};
             }

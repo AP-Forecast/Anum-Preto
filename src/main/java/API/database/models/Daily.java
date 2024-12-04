@@ -3,6 +3,7 @@ package API.database.models;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "daily")
@@ -13,8 +14,8 @@ public class Daily {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "dayId", cascade = CascadeType.ALL)
-    private ArrayList<Hourly> hourlyID;
+    @OneToMany(mappedBy = "dayId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Hourly> hourlyID = new ArrayList<>();
 
     @Column(name = "temperatureMax", nullable = false)
     private Double temperatureMax;
@@ -54,12 +55,12 @@ public class Daily {
         this.id = id;
     }
 
-    public ArrayList<Hourly> getHourlyID() {
+    public List<Hourly> getHourlyID() {
         return hourlyID;
     }
 
-    public void setHourlyID(ArrayList<Hourly> hourlyID) {
-        this.hourlyID = hourlyID;
+    public void setHourlyID(Hourly hourlyID) {
+        this.hourlyID.add(hourlyID);
     }
 
     public Double getTemperatureMax() {

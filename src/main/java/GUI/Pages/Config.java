@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import API.Localizer;
+import API.database.utils.CRUD_Operator;
+import API.database.utils.HibernateUtil;
 
 public class Config extends JPanel {
 
@@ -86,7 +88,14 @@ public class Config extends JPanel {
                     String longi = longitudeData.getText();
 
                     try{
+                        CRUD_Operator.truncateDb();
                         Localizer.setLocation(lat, longi);
+                        Localizer.getWeeklyData();
+                        Localizer.getHourlyData();
+
+                        CRUD_Operator doc = new CRUD_Operator();
+                        doc.createData(Localizer.getData(), Localizer.getHourly_data());
+
                         JOptionPane.showMessageDialog(configPanel, "Dados alterados com sucesso!");
                     } catch (Exception exception){
                         JOptionPane.showMessageDialog(configPanel, "Não consegui alterar seus dados.");
